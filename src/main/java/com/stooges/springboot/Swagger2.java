@@ -22,9 +22,9 @@ public class Swagger2 {
     @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
+                .apiInfo(apiInfo())//该api基本信息
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.didispace.web"))
+                .apis(RequestHandlerSelectors.basePackage("com.stooges.springboot"))
                 .paths(PathSelectors.any())
                 .build();
     }

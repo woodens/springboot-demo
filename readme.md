@@ -31,3 +31,6 @@
 	6. 恰到好处的对 application.properties 和 application.yml 进行筛选，
 	7. 包括特定profile（ profile-specific） 的文件，比如 applicationfoo.properties 和 application-foo.yml
     8. 只需在`parent`标签下设定`version`版本号，导入其他starters就可以省略版本号
+- @ModelAttribute和@RequestBody
+    1. @ModelAttribute会将`name='测试'&age=1`映射为`user={name='测试',age=1}`传入方法参数
+    2. @RequestBody是直接将`user={name='测试',age=1}`传入方法参数
