@@ -1,9 +1,11 @@
 package com.stooges.springboot.web;
 
 import com.stooges.springboot.domain.User;
+import com.stooges.springboot.service.UserService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -18,13 +20,15 @@ public class UserController {
 
     // 创建线程安全的Map
     private static Map<Long, User> users = Collections.synchronizedMap(new HashMap<Long, User>());
+    @Autowired
+    private UserService userService;
 
     @ApiOperation(value = "获取用户列表",notes="")
     @RequestMapping(value={""}, method= RequestMethod.GET)
     public List<User> getUserList() {
         // 处理"/users/"的GET请求，用来获取用户列表
         // 还可以通过@RequestParam从页面中传递参数来进行查询条件或者翻页信息的传递
-        List<User> r = new ArrayList<User>(users.values());
+        List<User> r = userService.findUserList();
         return r;
     }
 
@@ -34,7 +38,7 @@ public class UserController {
     public String postUser(@RequestBody User user) {
         // 处理"/users/"的POST请求，用来创建User
         // 除了@ModelAttribute绑定参数之外，还可以通过@RequestParam从页面中传递参数
-        users.put(user.getId(), user);
+        userService.create(user.getName(),user.getAge());
         return "success";
     }
 

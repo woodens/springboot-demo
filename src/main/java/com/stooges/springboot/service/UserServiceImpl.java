@@ -1,8 +1,12 @@
 package com.stooges.springboot.service;
 
+import com.stooges.springboot.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author 张超
@@ -13,8 +17,18 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Override
+    public List<User> findUserList() {
+        List<User> list = jdbcTemplate.query("select * from t_user", new Object[]{}, new BeanPropertyRowMapper<User>(User.class));
+        return list;
+    }
+    @Override
     public void create(String name, Integer age) {
-        jdbcTemplate.update("insert into USER(name, age) values(?, ?)", name, age);
+        jdbcTemplate.update("insert into t_user(name, age) values(?, ?)", name, age);
+    }
+
+    @Override
+    public void updateUser(Long id, User user) {
+        jdbcTemplate.update("update t_user set ");
     }
 
     @Override
