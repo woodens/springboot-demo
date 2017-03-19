@@ -1,7 +1,7 @@
 package com.stooges.springboot;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -17,20 +17,19 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 @PropertySource(value = "classpath:datasource.properties")
+@ConfigurationProperties(prefix = "spring.datasource")
 public class DruidConfiguration {
-    @Value("${spring.datasource.url}")
+//    @Value("${spring.datasource.url}")
     private String url;
-    @Value("${spring.datasource.username}")
     private String username;
-
-    @Value("${spring.datasource.password}")
     private String password;
-    @Value("${spring.datasource.driverClassName}")
+//    @Value("${spring.datasource.driverClassName}")
     private String driverClassName;
 
     @Bean
     @Primary
     public DataSource dataSource(){
+        System.out.println(driverClassName+"测试 ");
         DruidDataSource dataSource = new DruidDataSource();
         dataSource.setDriverClassName(driverClassName.trim());
         dataSource.setUrl(url.trim());
@@ -44,5 +43,37 @@ public class DruidConfiguration {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         jdbcTemplate.setDataSource(dataSource());
         return jdbcTemplate;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getDriverClassName() {
+        return driverClassName;
+    }
+
+    public void setDriverClassName(String driverClassName) {
+        this.driverClassName = driverClassName;
     }
 }
