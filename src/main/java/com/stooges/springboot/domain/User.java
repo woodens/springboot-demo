@@ -1,6 +1,7 @@
 package com.stooges.springboot.domain;
 
 /**
+ * 用户
  * @author 张超
  * @date 2017/3/14.
  */
